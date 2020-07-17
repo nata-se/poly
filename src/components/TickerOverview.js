@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import './styles/ticker-owerview.scss'
+import './styles/ticker-overview.scss'
 
 
 import { getDetailes } from '../api'

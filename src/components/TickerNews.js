@@ -1,52 +1,42 @@
 import React, { useState, useEffect} from 'react'
 import { getNews } from '../api'
 import moment    from 'moment'
+import './styles/ticker-overview.scss'
 
 
-// export const TickerNewsBlock = (props) => {
-//     function newsTimeFormat(time) {
-//         const date = moment(time).format('dddd MMM DD, YYYY')
-//         return date
-//     }
+export const TickerNewsBlock = (article) => {
+    console.log(article.props.title)
+    function newsTimeFormat(time) {
+        const date = moment(time).format('dddd MMM DD, YYYY')
+        return date
+    }
+    const { title, symbols, summary,image, keywords, source, timestamp, url } = article.props
  
-//     return ( 
-//         props.tickerNews.map(({ title, symbols, summary, image,keywords, source,timestamp, url }) => {
-//             return (
-//                 <div key={title}>
-//                 <div className="daily-news-date">{newsTimeFormat(timestamp)}</div>
+    return ( 
+        <div className="columns">
+            <div className="column">
+            <div className="daily-news-date">{newsTimeFormat(timestamp)}</div>
+                <figure className="media-left">
+                <p className="image is-256x256">
+                    { image && <img src={image} alt={keywords}/>}
+                </p>
+                </figure>
+            </div>
+            <div className="column">
+                <p className="value">
+                    <strong>{title}</strong><br/>
+                    <small><a href={url} target="_blank"><i>{source}</i></a></small> 
+                </p>
+            </div>
+            <div className="column is-half">
+            <p className="value">
+                    {summary}
+                </p>
+            </div>
+        </div>
 
-//                 <article className="media">
-//                 <figure className="media-left">
-//                   <p className="image is-96x96">
-//                     { image && <img src={image} alt={keywords}/>}
-//                   </p>
-//                 </figure>
-//                 <div className="media-content">
-//                   <div className="content">
-//                     <p>
-//                       <strong>{title}</strong> <small>{symbols}</small> 
-//                     </p>
-//                   </div>
-//                   <nav className="level is-mobile">
-//                     <div className="level-left">
-//                      <hr/>
-//                     </div>
-//                   </nav>
-//                 </div>
-//                 <div className="media-right">
-//                     <p>
-//                     {summary}
-//                     </p>
-//                 </div>
-//               </article>
-//               </div>
-//             )
-//         })
-//      );
-// }
-
-
-
+            )
+        }
 
 export const TickerNews = (props, dataLoader) => {
     const [tickerNews, changeNews] = useState('')
@@ -61,58 +51,18 @@ export const TickerNews = (props, dataLoader) => {
         
     },[props])
 
-    function newsTimeFormat(time) {
-        const date = moment(time).format('dddd MMM DD, YYYY')
-        return date
-    }
  
 
     if (!tickerNews) return null
 
     return ( 
         <div className="box">
-            {/* <TickerNewsBlock props={tickerNews}/> */}
             <div>News</div>
             {
-                tickerNews.map((news) => {
+                tickerNews.map((article) => {
                     return (
-                        <div key={news.timestamp}>
-                            
-                    <div className="daily-news-date">{newsTimeFormat(news.timestamp)}</div>
-                       
-
-                        <article className="media">
-                        <figure className="media-left">
-                          <p className="image is-64x64">
-                            <img src={news.image}/>
-                          </p>
-                        </figure>
-                        <div className="media-content">
-                          <div className="content">
-                            <p>
-                              <strong>{news.title}</strong> <small>{news.symbols}</small> 
-                              <br/>
-                                {news.summary}
-                            </p>
-                          </div>
-                          <nav className="level is-mobile">
-                            <div className="level-left">
-                              <a className="level-item">
-                                <span className="icon is-small"><i className="fas fa-reply"></i></span>
-                              </a>
-                              <a className="level-item">
-                                <span className="icon is-small"><i className="fas fa-retweet"></i></span>
-                              </a>
-                              <a className="level-item">
-                                <span className="icon is-small"><i className="fas fa-heart"></i></span>
-                              </a>
-                            </div>
-                          </nav>
-                        </div>
-                        <div className="media-right">
-                          
-                        </div>
-                      </article>
+                        <div key={article.title}>
+                             <TickerNewsBlock props={article}/>
                       </div>
                     )
                 })
