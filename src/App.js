@@ -9,6 +9,7 @@ import SearchBox from './components/SearchBox-old'
 import TickerSearch from './components/TickerSearch'
 import { TickerOverview } from './components/TickerOverview'
 import { TickerNews } from './components/TickerNews'
+import TickerChart from './components/TickerChart'
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
       <TickerSearch onValueChange={handleTickerChanged} />
       <div className="columns">
         <div className="column is-two-thirds">
+            <TickerChart />
             <TickerNews ticker={ticker} dataLoader={getNews}/> 
         </div>
         <div className="column is-one-third">
